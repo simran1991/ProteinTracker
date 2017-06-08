@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 14, 2016 3:35:09 PM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.protienTracker.EntityOneToOne.ProteinData" table="PROTEIN_DATA">
+      <!-- reuse userID here for id to make it that we create generator differently ,mapping user entity id here-->
+      
+        <id name="id" type="int">
+            <column name="proteinId" />
+            <generator class="foreign" >
+            	<param name="property">user</param>
+            </generator>
+        </id>
+        <property name="total" type="int">
+            <column name="TOTAL" />
+        </property>
+        <property name="goal" type="int">
+            <column name="GOAL" />
+        </property>
+        
+        <one-to-one name="user" class="com.protienTracker.EntityOneToOne.Users" constrained="true" >
+        </one-to-one>
+    </class>
+</hibernate-mapping>

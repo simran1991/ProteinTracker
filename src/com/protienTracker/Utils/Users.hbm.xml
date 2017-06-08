@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 14, 2016 10:36:41 AM by Hibernate Tools 3.4.0.CR1 -->
+
+<hibernate-mapping>
+<filter-def name="nameFilter" condition="name like :name">
+	<filter-param name="name" type="string"/>
+</filter-def>
+ <class name="com.protienTracker.Utils.Users" table="USERS">
+  <id name="id" type="int">
+   <column name="ID"/>
+   <generator class="identity"/>
+  </id>
+  <property generated="never" lazy="false" name="name" type="java.lang.String">
+   <column name="NAME"/>
+  </property>
+  <!-- creating value type collection -->
+ 
+ <component name="proteinData">
+	   <property generated="never" lazy="false" name="total" type="int">
+	   <column name="TOTAL"/>
+	   </property>
+	   <property generated="never" lazy="false" name="goal" type="int">
+	   <column name="GOAL"/>
+	  </property>
+ </component>
+ 
+ <!-- creating value type collection using set -->
+ 
+ <set name="history" table="user_history" >
+ 	<key column="ID"/><!-- we are using same key as of userid for this table ie using as foreing key for creating one 
+ 	to many relationsip with user -->
+ 		
+ 	<composite-element class="com.protienTracker.Utils.UserHistory">
+ 		<property name="timestamp" type="date" column="entry_time"/>
+ 		<property name="entry" type="java.lang.String" column="entry"/>
+ 	</composite-element>
+ </set>
+ <filter name="nameFilter"></filter>
+ <!-- creating value type collection using list -->
+ <!-- <list name="history" table="user_history" >
+ 	<key column="ID"/> --> 
+ <!--	<index column="Position"/> --> <!-- we need this as list is orderd colection so need a column to keep track of order-->
+ 	<!--
+ 	<composite-element class="com.protienTracker.Utils.UserHistory">
+ 		<property name="timestamp" type="date" column="entry_time"/>
+ 		<property name="entry" type="java.lang.String" column="entry"/>
+ 	</composite-element>
+ </list>
+ -->
+ 
+  <!-- creating value type collection using Map 
+ <map name="history" table="user_history" >
+ 	<key column="ID"/>
+ 	<map-key type="string" column="enrty_identifier"/>	
+ 	<composite-element class="com.protienTracker.Utils.UserHistory">
+ 		<property name="timestamp" type="date" column="entry_time"/>
+ 		<property name="entry" type="java.lang.String" column="entry"/>
+ 	</composite-element>
+ </map>
+ -->
+ 
+ <!-- creating value type collection using IdBag non unique with duplicate date
+ <idbag name="history" table="user_history" >
+ 	<collection-id type="int" column="ID">
+ 		<generator class="increment"/>
+ 	</collection-id>
+ 	<key column="use_id"/>
+ 	<composite-element class="com.protienTracker.Utils.UserHistory">
+ 		<property name="timestamp" type="date" column="entry_time"/>
+ 		<property name="entry" type="java.lang.String" column="entry"/>
+ 	</composite-element>
+ </idbag>
+ -->
+  
+ </class>
+</hibernate-mapping>

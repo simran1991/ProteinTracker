@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 14, 2016 10:36:41 AM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+ <class name="com.protienTracker.EntityOneToMany.Users" table="USERS">
+  <id name="id" type="int">
+   <column name="ID"/>
+   <generator class="identity"/>
+  </id>
+  <property generated="never" lazy="false" name="name" type="java.lang.String">
+   <column name="NAME"/>
+  </property>
+  <!-- creating value type collection -->
+ 
+ <component name="proteinData">
+	   <property generated="never" lazy="false" name="total" type="int">
+	   <column name="TOTAL"/>
+	   </property>
+	   <property generated="never" lazy="false" name="goal" type="int">
+	   <column name="GOAL"/>
+	  </property>
+ </component>
+ 
+ <!-- creating entity type collection using List it uses inverse true that means user and history are bidirectional
+ it uses cascase so that when we update the user,
+  user history will also gets updated.No need for explicit session.save(history) to save history separately
+  -->
+ 
+ <list name="history" table="user_history" inverse="true" cascade="save-update">
+ 	<key column="userId"/> 
+ 	<list-index column="ID"/>
+ 	<one-to-many class="com.protienTracker.EntityOneToMany.UserHistory"/>
+ </list>		
+ 	 
+ </class>
+</hibernate-mapping>
